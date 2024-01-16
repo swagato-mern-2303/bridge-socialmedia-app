@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { userLoginInfo } from "../slices/userSlice";
+import Profile from "./Profile";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   const auth = getAuth();
@@ -25,7 +27,13 @@ export default function Home() {
 
   return (
     <div>
-      {verified ? <div>home</div> : <VerifyModal onNavigate={navigate} />}
+      {verified ? (
+        <div className="bg-dark-400 min-h-screen">
+          <Profile />
+        </div>
+      ) : (
+        <VerifyModal onNavigate={navigate} />
+      )}
     </div>
   );
 }

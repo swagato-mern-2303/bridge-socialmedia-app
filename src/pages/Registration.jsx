@@ -1,10 +1,9 @@
 import AccountInput from "../components/AccountInput";
-import placeholderImg from "../assets/placeholder-img.png";
 import { IoPerson } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -12,9 +11,11 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { ToastContainer, Zoom, toast } from "react-toastify";
+import { getDatabase, ref, set } from "firebase/database";
 
 export default function Registration() {
   const auth = getAuth();
+  const db = getDatabase();
   const navigate = useNavigate();
 
   const [signUpInfo, setSignUpInfo] = useState({
@@ -77,10 +78,18 @@ export default function Registration() {
         signUpInfo.email,
         signUpInfo.password,
       )
+        .then((userCredential) => {
+          set(ref(db, "users/" + userCredential.user.uid), {
+            username: signUpInfo.name,
+            email: signUpInfo.email,
+            profileImg: "https://placehold.co/315x315?text=profileImg",
+            coverImg: "https://placehold.co/851x315?text=coverImg",
+          });
+        })
         .then(() => {
           updateProfile(auth.currentUser, {
             displayName: signUpInfo.name,
-            photoURL: placeholderImg,
+            photoURL: "https://placehold.co/315x315?text=profileImg",
           });
         })
         .then(() =>
@@ -199,12 +208,12 @@ export default function Registration() {
         </form>
         <p className="mt-2 text-center text-lg font-medium text-white">
           Already have an account ?{" "}
-          <span
-            className="cursor-pointer text-blue-300 duration-150 hover:text-blue-400"
-            onClick={() => navigate("/login")}
+          <Link
+            to="/login"
+            className="text-blue-300 duration-150 hover:text-blue-400"
           >
             Login
-          </span>
+          </Link>
         </p>
       </div>
     </div>

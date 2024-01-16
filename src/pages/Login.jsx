@@ -1,15 +1,17 @@
 import AccountInput from "../components/AccountInput";
 import { MdEmail } from "react-icons/md";
 import { FaLock } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { userLoginInfo } from "../slices/userSlice";
 import { Flip, ToastContainer, toast } from "react-toastify";
+import { getDatabase, onValue, ref } from "firebase/database";
 
 export default function Login() {
   const auth = getAuth();
+  const db = getDatabase();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -45,11 +47,22 @@ export default function Login() {
     !Object.keys(validate(loginInfo.email, loginInfo.password)).length &&
       signInWithEmailAndPassword(auth, loginInfo.email, loginInfo.password)
         .then((userCredential) => {
-          dispatch(userLoginInfo(userCredential.user));
-          localStorage.setItem(
-            "userLoginInfo",
-            JSON.stringify(userCredential.user),
-          );
+          onValue(ref(db, "users/" + userCredential.user.uid), (snapshot) => {
+            dispatch(
+              userLoginInfo({
+                ...userCredential.user,
+                coverImg: snapshot.val().coverImg,
+              }),
+            );
+            localStorage.setItem(
+              "userLoginInfo",
+              JSON.stringify({
+                ...userCredential.user,
+                coverImg: snapshot.val().coverImg,
+              }),
+            );
+          });
+
           setLoginInfo({ email: "", password: "" });
           navigate("/");
         })
@@ -59,6 +72,7 @@ export default function Login() {
             toast.error("Invalid email and password combination");
         });
   };
+
   return (
     <div className="flex h-screen items-center justify-center bg-login-img bg-cover bg-center bg-no-repeat">
       <ToastContainer
@@ -116,15 +130,25 @@ export default function Login() {
             Sign Up
           </button>
         </form>
-        <p className="mt-2 text-center text-lg font-medium text-white">
-          Don&apos; have an account ?{" "}
-          <span
-            className="cursor-pointer text-blue-300 duration-150 hover:text-blue-400"
-            onClick={() => navigate("/registration")}
-          >
-            Sign Up
-          </span>
-        </p>
+        <div className="mt-2 text-center text-lg text-white">
+          <p>
+            Don&apos;t have an account ?{" "}
+            <Link
+              to="/registration"
+              className="font-medium text-blue-300 duration-150 hover:text-blue-400"
+            >
+              Sign up
+            </Link>
+          </p>
+          <p>
+            <Link
+              to="/forgotpassword"
+              className="font-medium text-green-400 duration-150 hover:text-green-500"
+            >
+              Forgot Password
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
