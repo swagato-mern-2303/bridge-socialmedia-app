@@ -47,24 +47,13 @@ export default function Login() {
     !Object.keys(validate(loginInfo.email, loginInfo.password)).length &&
       signInWithEmailAndPassword(auth, loginInfo.email, loginInfo.password)
         .then((userCredential) => {
-          onValue(ref(db, "users/" + userCredential.user.uid), (snapshot) => {
-            dispatch(
-              userLoginInfo({
-                ...userCredential.user,
-                coverImg: snapshot.val().coverImg,
-              }),
-            );
-            localStorage.setItem(
-              "userLoginInfo",
-              JSON.stringify({
-                ...userCredential.user,
-                coverImg: snapshot.val().coverImg,
-              }),
-            );
-          });
-
-          setLoginInfo({ email: "", password: "" });
+          dispatch(userLoginInfo(userCredential.user));
+          localStorage.setItem(
+            "userLoginInfo",
+            JSON.stringify(userCredential.user),
+          );
           navigate("/");
+          setLoginInfo({ email: "", password: "" });
         })
         .catch((error) => {
           setLoginInfo({ email: "", password: "" });
@@ -82,13 +71,13 @@ export default function Login() {
         autoClose={1000}
         position="top-center"
       />
-      <div className="rounded-lg bg-black/30 p-16 shadow-[16px_16px_20px_0_rgba(0,0,0,0.4)] backdrop-blur-lg">
-        <h1 className="mb-5 text-center text-5xl font-light uppercase text-white">
+      <div className="rounded-lg bg-black/30 p-4 shadow-[16px_16px_20px_0_rgba(0,0,0,0.4)] backdrop-blur-lg md:p-16">
+        <h1 className="mb-5 text-center text-3xl font-light uppercase text-white md:text-5xl">
           Login
         </h1>
         <form
           noValidate
-          className="flex w-[350px] flex-col gap-y-10"
+          className="flex flex-col gap-y-3 md:w-[350px] md:gap-y-10"
           onSubmit={(e) => handleLogin(e)}
         >
           <div>
@@ -103,7 +92,7 @@ export default function Login() {
                 setErrors((cur) => ({ ...cur, email: "" }));
               }}
             />
-            <p className="mt-1 h-[1rem] font-medium text-white">
+            <p className="mt-1 h-[1rem] text-sm font-medium text-white md:text-base">
               {errors.email}
             </p>
           </div>
@@ -119,18 +108,18 @@ export default function Login() {
                 setErrors((cur) => ({ ...cur, password: "" }));
               }}
             />
-            <p className="mt-1 h-[1rem] font-medium text-white">
+            <p className="mt-1 h-[1rem] text-sm font-medium text-white md:text-base">
               {errors.password}
             </p>
           </div>
           <button
             type="submit"
-            className="rounded-full bg-green-500 py-3 text-lg font-medium text-white duration-200 hover:bg-green-600"
+            className="rounded-full bg-green-500 py-2  font-medium text-white duration-200 hover:bg-green-600 md:py-3 md:text-lg"
           >
             Sign Up
           </button>
         </form>
-        <div className="mt-2 text-center text-lg text-white">
+        <div className="mt-2 text-center text-white md:text-lg">
           <p>
             Don&apos;t have an account ?{" "}
             <Link

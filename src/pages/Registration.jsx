@@ -83,7 +83,7 @@ export default function Registration() {
             username: signUpInfo.name,
             email: signUpInfo.email,
             profileImg: "https://placehold.co/315x315?text=profileImg",
-            coverImg: "https://placehold.co/851x315?text=coverImg",
+            coverImg: "https://placehold.co/1240x496?text=coverImg",
           });
         })
         .then(() => {
@@ -114,21 +114,21 @@ export default function Registration() {
   };
   return (
     <div className="flex h-screen items-center justify-center bg-registration-img bg-cover bg-center bg-no-repeat">
-      <div className="rounded-lg bg-black/30 p-16 shadow-[16px_16px_20px_0_rgba(0,0,0,0.4)] backdrop-blur-lg">
-        <ToastContainer
-          position="top-center"
-          transition={Zoom}
-          autoClose={2500}
-        />
-        <h1 className="mb-5 text-center text-5xl font-light uppercase text-white">
+      <ToastContainer
+        position="top-center"
+        transition={Zoom}
+        autoClose={2500}
+      />
+      <div className="rounded-lg bg-black/30 p-4 shadow-[16px_16px_20px_0_rgba(0,0,0,0.4)] backdrop-blur-lg md:p-16">
+        <h1 className="mb-5 text-center text-3xl font-light uppercase text-white md:text-5xl">
           Registration
         </h1>
         <form
           noValidate
-          className="flex w-[350px] flex-col gap-y-3"
+          className="flex flex-col gap-y-3 md:w-[350px]"
           onSubmit={(e) => handleSignUp(e)}
         >
-          <div className="flex flex-col gap-y-8">
+          <div className="flex flex-col gap-y-3 md:gap-y-8">
             <div>
               <AccountInput
                 id="name"
@@ -140,7 +140,7 @@ export default function Registration() {
                   setErrors((cur) => ({ ...cur, name: "" }));
                 }}
               />
-              <p className="mt-1 h-[1rem] font-medium text-white">
+              <p className="mt-1 h-[1rem] text-sm font-medium text-white md:text-base">
                 {errors.name}
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function Registration() {
                   setErrors((cur) => ({ ...cur, email: "" }));
                 }}
               />
-              <p className="mt-1 h-[1rem] font-medium text-white">
+              <p className="mt-1 h-[1rem] text-sm font-medium text-white md:text-base">
                 {errors.email}
               </p>
             </div>
@@ -175,7 +175,7 @@ export default function Registration() {
                   setErrors((cur) => ({ ...cur, password: "" }));
                 }}
               />
-              <p className="mt-1 h-[1rem] font-medium text-white">
+              <p className="mt-1 h-[1rem] text-sm font-medium text-white md:text-base">
                 {errors.password}
               </p>
             </div>
@@ -194,19 +194,19 @@ export default function Registration() {
                   setErrors((cur) => ({ ...cur, confirmPassword: "" }));
                 }}
               />
-              <p className="mt-1 h-[1rem] font-medium text-white">
+              <p className="mt-1 h-[1rem] text-sm font-medium text-white md:text-base">
                 {errors.confirmPassword}
               </p>
             </div>
           </div>
           <button
             type="submit"
-            className="rounded-full bg-green-500 py-3 text-lg font-medium text-white duration-200 hover:bg-green-600"
+            className="rounded-full bg-green-500 py-2 font-medium text-white duration-200 hover:bg-green-600 md:py-3 md:text-lg"
           >
             Sign Up
           </button>
         </form>
-        <p className="mt-2 text-center text-lg font-medium text-white">
+        <p className="mt-2 text-center font-medium text-white md:text-lg">
           Already have an account ?{" "}
           <Link
             to="/login"

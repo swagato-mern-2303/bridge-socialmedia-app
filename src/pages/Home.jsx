@@ -19,17 +19,20 @@ export default function Home() {
     !userData && navigate("/login");
   });
 
-  onAuthStateChanged(auth, (user) => {
-    setVerified(user.emailVerified);
-    dispatch(() => userLoginInfo(user));
-    localStorage.setItem("userLoginInfo", JSON.stringify(user));
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      setVerified(user.emailVerified);
+      dispatch(() => userLoginInfo(user));
+      localStorage.setItem("userLoginInfo", JSON.stringify(user));
+    });
   });
 
   return (
     <div>
       {verified ? (
-        <div className="bg-dark-400 min-h-screen">
-          <Profile />
+        <div className="min-h-screen bg-dark-400 text-white">
+          <Navbar />
+          this is home
         </div>
       ) : (
         <VerifyModal onNavigate={navigate} />

@@ -11,8 +11,11 @@ function AccountInput({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   return (
-    <div className="relative flex items-center gap-x-2 overflow-hidden rounded-lg bg-blue-100 text-xl font-semibold shadow-lg">
-      <label htmlFor={id} className="absolute p-2 text-2xl text-black/80">
+    <div className="relative flex items-center gap-x-2 overflow-hidden rounded-lg bg-blue-100 font-semibold shadow-lg md:text-xl">
+      <label
+        htmlFor={id}
+        className="absolute p-2 text-xl text-black/80 md:text-2xl"
+      >
         {label}
       </label>
       <input
