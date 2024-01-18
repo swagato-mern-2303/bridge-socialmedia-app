@@ -46,7 +46,7 @@ function Profile() {
               </picture>
             )}
           </div>
-          <div className="mx-4 gap-x-8 md:mx-16 md:flex">
+          <div className="mx-4 gap-x-4 md:mx-16 md:flex lg:gap-x-8">
             <div className="mb-[-2.75rem] flex -translate-y-[calc(50%-1rem)] justify-center">
               <picture>
                 <img
@@ -64,7 +64,10 @@ function Profile() {
                 <p className="text-slate-200">500 friends</p>
               </div>
               <div className="mb-4 flex gap-x-2 self-center">
-                <button className="flex items-center gap-x-1 rounded-lg bg-green-600 px-4 py-2 font-semibold text-white duration-150 hover:bg-green-700" onClick={()=>navigate("/editprofile")}>
+                <button
+                  className="flex items-center gap-x-1 rounded-lg bg-green-600 px-4 py-2 font-semibold text-white duration-150 hover:bg-green-700"
+                  onClick={() => navigate("/editprofile")}
+                >
                   <MdEdit />
                   Edit profile
                 </button>
@@ -79,13 +82,16 @@ function Profile() {
             </div>
             <div className="mt-3 hidden w-full justify-between md:flex">
               <div>
-                <h2 className="text-5xl text-white">
+                <h2 className="text-3xl text-white lg:text-5xl">
                   {currentUserData.displayName}
                 </h2>
                 <p className="text-lg text-slate-200">500 friends</p>
               </div>
               <div className="mb-4 flex gap-x-4 self-center">
-                <button className="flex items-center gap-x-1 rounded-lg bg-green-600 px-4 py-2 text-lg font-semibold text-white duration-150 hover:bg-green-700" onClick={()=>navigate("/editprofile")}>
+                <button
+                  className="flex items-center gap-x-1 rounded-lg bg-green-600 px-4 py-2 text-lg font-semibold text-white duration-150 hover:bg-green-700"
+                  onClick={() => navigate("/editprofile")}
+                >
                   <MdEdit />
                   Edit profile
                 </button>
