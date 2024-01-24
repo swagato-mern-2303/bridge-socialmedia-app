@@ -12,7 +12,7 @@ export default {
         "forgotpassword-img": "url('assets/bridge-img-3.jpg')",
       },
       colors: {
-        "light-400": "##E4E6EB",
+        "light-400": "#E4E6EB",
         "light-500": "#3E3F41",
         "dark-100": "#4E4F50",
         "dark-200": "#3A3B3C",

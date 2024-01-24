@@ -4,8 +4,8 @@ import { MdGroups } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 const navbarLinks = [
-  { linkTo: "/", icon: <GoHomeFill /> },
-  { linkTo: "/users", icon: <MdGroups /> },
+  { linkTo: "/", icon: <GoHomeFill />, tooltipTxt: "Home" },
+  { linkTo: "/users", icon: <MdGroups />, tooltipTxt: "Users" },
 ];
 
 export default function Navbar() {
@@ -24,15 +24,20 @@ export default function Navbar() {
             <NavItem key={index} data={item} />
           ))}
         </ul>
-        <Link to="/profile" className="block">
-          <picture>
-            <img
-              className="w-10 rounded-full md:w-12"
-              src={currentUserData.photoURL}
-              alt="profile image"
-            />
-          </picture>
-        </Link>
+        <div className="relative">
+          <Link to="/profile" className="peer block">
+            <picture>
+              <img
+                className="w-10 rounded-full md:w-12"
+                src={currentUserData.photoURL}
+                alt="profile image"
+              />
+            </picture>
+          </Link>
+          <p className="absolute left-1/2 top-[120%] -translate-x-1/2 rounded-xl bg-slate-200 px-4 py-[2px] text-sm text-black opacity-0 peer-hover:opacity-100 peer-hover:duration-500">
+            Profile
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -40,13 +45,17 @@ export default function Navbar() {
 
 function NavItem({ data }) {
   return (
-    <li>
+    <li className="relative">
       <NavLink
-        className="block rounded-md px-6 py-3 hover:bg-dark-200 md:px-10 md:py-4"
+        className="peer block rounded-md px-6 py-3 hover:bg-dark-200 md:px-10 md:py-4"
         to={data.linkTo}
       >
         {data.icon}
       </NavLink>
+
+      <p className="absolute left-1/2 top-[120%] -translate-x-1/2 rounded-xl bg-slate-200 px-4 py-[2px] text-sm text-black opacity-0 peer-hover:opacity-100 peer-hover:duration-500">
+        {data.tooltipTxt}
+      </p>
     </li>
   );
 }

@@ -8,6 +8,7 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import ImgLoader from "../components/ImgLoader";
 import { userLoginInfo } from "../slices/userSlice";
 import { useNavigate } from "react-router-dom";
+import EditProfile from "./EditProfile";
 
 function Profile() {
   const db = getDatabase();
@@ -17,11 +18,14 @@ function Profile() {
   const currentUserData = useSelector((state) => state.user.userInfo);
   const [coverImg, setCoverImg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
 
   const handleLogout = function () {
-    localStorage.removeItem("userLoginInfo");
-    dispatch(userLoginInfo(null));
-    navigate("/login");
+    if (confirm("Do you want to log out ?")) {
+      localStorage.removeItem("userLoginInfo");
+      dispatch(userLoginInfo(null));
+      navigate("/login");
+    }
   };
 
   useEffect(() => {
@@ -30,10 +34,10 @@ function Profile() {
       setCoverImg(snapshot.val().coverImg);
       setIsLoading(false);
     });
-  }, []);
+  }, [currentUserData.uid, db]);
 
   return (
-    <>
+    <div>
       <Navbar />
       <div className="bg-dark-300">
         <MainContainer>
@@ -90,7 +94,7 @@ function Profile() {
               <div className="mb-4 flex gap-x-4 self-center">
                 <button
                   className="flex items-center gap-x-1 rounded-lg bg-green-600 px-4 py-2 text-lg font-semibold text-white duration-150 hover:bg-green-700"
-                  onClick={() => navigate("/editprofile")}
+                  onClick={() => setShowEditProfile(true)}
                 >
                   <MdEdit />
                   Edit profile
@@ -107,7 +111,15 @@ function Profile() {
           </div>
         </MainContainer>
       </div>
-    </>
+      {showEditProfile && (
+        <EditProfile
+          profileImg={currentUserData.photoURL}
+          profileName={currentUserData.displayName}
+          coverImg={coverImg}
+          onShowEditProfile={setShowEditProfile}
+        />
+      )}
+    </div>
   );
 }
 
