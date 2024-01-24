@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import ForgotPassword from "./pages/ForgotPassword";
 import Profile from "./pages/Profile";
 import Users from "./pages/Users";
-import EditProfile from "./pages/EditProfile";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,10 +32,6 @@ function App() {
     {
       path: "/users",
       element: <Users />,
-    },
-    {
-      path: "/editprofile",
-      element: <EditProfile />,
     },
   ]);
   return <RouterProvider router={router} />;

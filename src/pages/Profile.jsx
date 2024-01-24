@@ -8,7 +8,7 @@ import { getDatabase, onValue, ref } from "firebase/database";
 import ImgLoader from "../components/ImgLoader";
 import { userLoginInfo } from "../slices/userSlice";
 import { useNavigate } from "react-router-dom";
-import EditProfile from "./EditProfile";
+import EditProfile from "../components/EditProfile";
 
 function Profile() {
   const db = getDatabase();
@@ -54,7 +54,7 @@ function Profile() {
             <div className="mb-[-2.75rem] flex -translate-y-[calc(50%-1rem)] justify-center">
               <picture>
                 <img
-                  className="aspect-square w-[125px] rounded-full border-4 border-dark-300 bg-yellow-300 md:w-[175px]"
+                  className="aspect-square w-[125px] rounded-full border-4 border-dark-300 bg-slate-700 md:w-[175px]"
                   src={currentUserData.photoURL}
                   alt="profile-img"
                 />
@@ -70,7 +70,7 @@ function Profile() {
               <div className="mb-4 flex gap-x-2 self-center">
                 <button
                   className="flex items-center gap-x-1 rounded-lg bg-green-600 px-4 py-2 font-semibold text-white duration-150 hover:bg-green-700"
-                  onClick={() => navigate("/editprofile")}
+                  onClick={() => setShowEditProfile(true)}
                 >
                   <MdEdit />
                   Edit profile
