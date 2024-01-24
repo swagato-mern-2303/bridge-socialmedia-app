@@ -8,7 +8,7 @@ export default {
       },
       backgroundImage: {
         "registration-img": "url('assets/bridge-img-1.jpg')",
-        "login-img": "url('assets/bridge-img-2.webp')",
+        "login-img": "url('assets/bridge-img-2.jpg')",
         "forgotpassword-img": "url('assets/bridge-img-3.jpg')",
       },
       colors: {
